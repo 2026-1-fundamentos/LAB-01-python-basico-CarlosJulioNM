@@ -1,11 +1,3 @@
-"""
-Escriba el codigo que ejecute la accion solicitada en cada pregunta. Los
-datos requeridos se encuentran en el archivo data.csv. En este laboratorio
-solo puede utilizar las funciones y librerias basicas de python. No puede
-utilizar pandas, numpy o scipy.
-"""
-
-
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
@@ -25,3 +17,23 @@ def pregunta_07():
      (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
 
     """
+    agrupacion_por_numero = {}
+    
+    with open("files/input/data.csv", "r") as file:
+        for linea in file:
+            columnas = linea.strip().split("\t")
+            letra = columnas[0]
+            # Convertimos el número a entero porque las respuestas clave son enteros (0, 1, 2...)
+            numero = int(columnas[1])
+            
+            if numero in agrupacion_por_numero:
+                # Si el número ya existe como clave, agregamos la letra a su lista
+                agrupacion_por_numero[numero].append(letra)
+            else:
+                # Si no existe, creamos la clave y le asignamos una lista con esa primera letra
+                agrupacion_por_numero[numero] = [letra]
+                
+    # sorted() ordenará el diccionario basándose en las claves numéricas (0, 1, 2...)
+    resultado_ordenado = sorted(agrupacion_por_numero.items())
+    
+    return resultado_ordenado
