@@ -1,11 +1,3 @@
-"""
-Escriba el codigo que ejecute la accion solicitada en cada pregunta. Los
-datos requeridos se encuentran en el archivo data.csv. En este laboratorio
-solo puede utilizar las funciones y librerias basicas de python. No puede
-utilizar pandas, numpy o scipy.
-"""
-
-
 def pregunta_09():
     """
     Retorne un diccionario que contenga la cantidad de registros en que
@@ -21,6 +13,32 @@ def pregunta_09():
      'ggg': 13,
      'hhh': 16,
      'iii': 18,
-     'jjj': 18}}
+     'jjj': 18}
 
     """
+    conteo_claves = {}
+    
+    with open("files/input/data.csv", "r") as file:
+        for linea in file:
+            columnas = linea.strip().split("\t")
+            
+            # La columna 5 está en el índice 4
+            columna_5 = columnas[4]
+            
+            # Separamos los elementos por coma
+            pares = columna_5.split(",")
+            
+            for par in pares:
+                # Separamos por los dos puntos y nos quedamos solo con la clave (índice 0)
+                clave = par.split(":")[0]
+                
+                # Aumentamos el contador de esa clave
+                if clave in conteo_claves:
+                    conteo_claves[clave] += 1
+                else:
+                    conteo_claves[clave] = 1
+                    
+    # Ordenamos el diccionario alfabéticamente por sus claves para que coincida con la respuesta
+    resultado = {clave: conteo_claves[clave] for clave in sorted(conteo_claves.keys())}
+    
+    return resultado
