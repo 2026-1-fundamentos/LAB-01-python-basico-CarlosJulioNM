@@ -1,11 +1,3 @@
-"""
-Escriba el codigo que ejecute la accion solicitada en cada pregunta. Los
-datos requeridos se encuentran en el archivo data.csv. En este laboratorio
-solo puede utilizar las funciones y librerias basicas de python. No puede
-utilizar pandas, numpy o scipy.
-"""
-
-
 def pregunta_04():
     """
     La columna 3 contiene una fecha en formato `YYYY-MM-DD`. Retorne la
@@ -26,3 +18,28 @@ def pregunta_04():
      ('12', 3)]
 
     """
+    conteo_meses = {}
+    
+    with open("files/input/data.csv", "r") as file:
+        for linea in file:
+            columnas = linea.strip().split("\t")
+            
+            # La fecha está en la tercera columna (índice 2) -> Ej: "1999-02-28"
+            fecha = columnas[2]
+            
+            # Separamos la fecha por los guiones -> ["1999", "02", "28"]
+            partes_fecha = fecha.split("-")
+            
+            # El mes es el segundo elemento (índice 1) -> "02"
+            mes = partes_fecha[1]
+            
+            # Lógica de conteo en el diccionario
+            if mes in conteo_meses:
+                conteo_meses[mes] += 1
+            else:
+                conteo_meses[mes] = 1
+                
+    # Ordenamos por la clave (el mes en formato string, ej: '01', '02'...)
+    resultado_ordenado = sorted(conteo_meses.items())
+    
+    return resultado_ordenado
